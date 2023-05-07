@@ -17,30 +17,29 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		ft_printf(const char *, ...);
+int			ft_printf(const char *fmt, ...);
 
-# define FLAG_HASH (1U << 0U)
-# define FLAG_ZERO (1U << 1U)
-# define FLAG_LEFT (1U << 2U)
-# define FLAG_PLUS (1U << 3U)
-# define FLAG_SPACE (1U << 4U)
-# define FLAG_UPPERCASE (1U << 5U)
-# define FLAG_POINTER (1U << 6U)
+# define FLAG_HASH 0x1 // # 1U << 0U = 1
+# define FLAG_ZERO 0x2 // 0 1U << 1U = 2
+# define FLAG_LEFT 0x4 // - 1U << 2U = 4
+# define FLAG_PLUS 0x8 // + 1U << 3U = 8
+# define FLAG_SPACE 0x10 // ' ' 1U << 4U = 16
+# define FLAG_DOT 0x20 // . (precision) 1U << 5U = 64
 
-# define BASE_16_UPPER "0123456789ABCDEF"
-# define BASE_16_LOWER "0123456789abcdef"
-# define BASE_10 "0123456789"
+# define B16_UPPER "0123456789ABCDEF"
+# define B16_LOWER "0123456789abcdef"
+# define B10 "0123456789"
 
-size_t	ft_strlen(const char *s);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putnbr_base_fd(int n, char *base, int fd);
-void	ft_putstr_fd(char *s, int fd);
+size_t		ft_strlen(const char *s);
+void		ft_putchar_fd(char c, int fd);
+void		ft_putnbr_base_fd(int n, char *base, int fd);
+void		ft_putstr_fd(char *s, int fd);
 
 typedef struct s_state
 {
-	int	flags;
-	int	bytes;
-	void (*fn_ptr_table[9])(const char *, struct s_state *, va_list);
-}		t_state;
+	int		flags;
+	int		bytes;
+	void	(*fn_ptr_table[9])(const char *, struct s_state *, va_list);
+}			t_state;
 
 #endif
