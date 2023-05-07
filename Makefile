@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar
 ARFLAGS = rcs
 
-SRCS = ft_printf.c
+SRCS = ft_printf.c ft_putchar_fd.c ft_putnbr_base_fd.c ft_putstr_fd.c \
+		ft_strlen.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -24,4 +25,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
