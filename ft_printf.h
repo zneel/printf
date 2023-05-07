@@ -24,7 +24,7 @@ int			ft_printf(const char *fmt, ...);
 # define FLAG_LEFT 0x4 // - 1U << 2U = 4
 # define FLAG_PLUS 0x8 // + 1U << 3U = 8
 # define FLAG_SPACE 0x10 // ' ' 1U << 4U = 16
-# define FLAG_DOT 0x20 // . (precision) 1U << 5U = 64
+# define FLAG_DOT 0x20 // . (precision) 1U << 5U = 32
 
 # define B16_UPPER "0123456789ABCDEF"
 # define B16_LOWER "0123456789abcdef"
