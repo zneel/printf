@@ -39,7 +39,8 @@ typedef struct s_state
 {
 	int		flags;
 	int		bytes;
-	void	(*fn_ptr_table[9])(const char *, struct s_state *, va_list);
+	va_list	args;
+	void	(*fn_ptr_table[9])(const char *, struct s_state *);
 }			t_state;
 
 #endif
