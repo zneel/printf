@@ -31,8 +31,8 @@ int			ft_printf(const char *fmt, ...);
 # define B10 "0123456789"
 
 size_t		ft_strlen(const char *s);
-void		ft_putchar_fd(char c, int fd);
-void		ft_putnbr_base_fd(int n, char *base, int fd);
+ssize_t		ft_putchar_fd(char c, int fd);
+size_t		ft_putnbr_base_fd(ssize_t n, char *base, int fd);
 void		ft_putstr_fd(char *s, int fd);
 
 typedef struct s_state

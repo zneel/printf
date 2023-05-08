@@ -14,50 +14,79 @@
 
 void	print_c(t_state *state)
 {
-	char c;
+	char	c;
 
-	c = (char)va_arg(state->args, int);
+	c = va_arg(state->args, int);
 	state->bytes += write(1, &c, 1);
 }
 
 void	print_s(t_state *state)
 {
-	(void)state;
+	char	*s;
+
+	s = va_arg(state->args, char *);
+	if (!s)
+		s = "(null)";
+	state->bytes += write(1, s, ft_strlen(s));
 }
 
 void	print_p(t_state *state)
 {
-	(void)state;
-}
+	void* ptr;
+
+	ptr = va_arg(state->args, void *);
+	if (!ptr)
+		state->bytes += write(1, "(nil)", 5);
+	else
+	{
+		state->bytes += write(1, "0x", 2);
+		state->bytes += ft_putnbr_base_fd((unsigned long)ptr, B16_LOWER, 1);
+	}
+}	
 
 void	print_d(t_state *state)
 {
-	(void)state;
+	int	d;
+
+	d = va_arg(state->args, int);
+	state->bytes += ft_putnbr_base_fd(d, B10, 1);
 }
 
 void	print_i(t_state *state)
 {
-	(void)state;
+	int	i;
+
+	i = va_arg(state->args, int);
+	state->bytes += ft_putnbr_base_fd(i, B10, 1);
 }
 
 void	print_u(t_state *state)
 {
-	(void)state;
+	unsigned int	u;
+
+	u = va_arg(state->args, int);
+	state->bytes += ft_putnbr_base_fd((size_t)u, B10, 1);
 }
 
 void	print_x(t_state *state)
 {
-	(void)state;
+	int	x;
+
+	x = va_arg(state->args, int);
+	state->bytes += ft_putnbr_base_fd(x, B16_LOWER, 1);
 }
 
 void	print_big_x(t_state *state)
 {
-	(void)state;
+	int	big_x;
+
+	big_x = va_arg(state->args, int);
+	state->bytes += ft_putnbr_base_fd(big_x, B16_UPPER, 1);
 }
 
 void	print_percent(t_state *state)
 {
-	(void)state;
+	state->bytes += write(1, "%", 1);
 }
 
 void	init_func_table(t_state *state)
@@ -107,7 +136,7 @@ void	parse_precision(const char **fmt, t_state *state)
 
 void	parse_flags(const char **fmt, t_state *state)
 {
-	while(*fmt)
+	while (*fmt)
 	{
 		if (**fmt == '-')
 			state->flags |= FLAG_LEFT;
@@ -122,7 +151,7 @@ void	parse_flags(const char **fmt, t_state *state)
 		else if (**fmt == '+')
 			state->flags |= FLAG_PLUS;
 		else
-			break;
+			break ;
 		(*fmt)++;
 	}
 	parse_precision(fmt, state);
@@ -133,11 +162,11 @@ void	parse_fmt(const char **fmt, t_state *state)
 {
 	while (**fmt)
 	{
-		if(**fmt != '%')
+		if (**fmt != '%')
 		{
-			state->bytes += write(1, fmt, 1);
+			state->bytes += write(1, *fmt, 1);
 			(*fmt)++;
-			continue;
+			continue ;
 		}
 		else
 		{

@@ -11,20 +11,22 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-void	ft_putnbr_base_fd(int n, char *base, int fd)
+size_t	ft_putnbr_base_fd(ssize_t n, char *base, int fd)
 {
-	ssize_t	l;
 	int		len;
+	size_t	bytes;
 
-	l = n;
+	bytes = 0;
 	len = ft_strlen(base);
-	if (l < 0)
+	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);
-		l = -l;
+		bytes += ft_putchar_fd('-', fd);
+		n = -n;
 	}
-	if (l > len - 1)
-		ft_putnbr_base_fd(l / len, base, fd);
-	ft_putchar_fd(base[l % len] + 48, fd);
+	if (n > len)
+		bytes += ft_putnbr_base_fd(n / len, base, fd);
+	bytes += ft_putchar_fd(base[n % len], fd);
+	return (bytes);
 }
