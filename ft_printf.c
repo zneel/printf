@@ -6,63 +6,57 @@
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:11:45 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/06 21:31:18 by ebouvier         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:50:57 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_c(const char *fmt, t_state *state)
+void	print_c(t_state *state)
 {
-	(void)fmt;
+	char c;
+
+	c = (char)va_arg(state->args, int);
+	state->bytes += write(1, &c, 1);
+}
+
+void	print_s(t_state *state)
+{
 	(void)state;
 }
 
-void	print_s(const char *fmt, t_state *state)
+void	print_p(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_p(const char *fmt, t_state *state)
+void	print_d(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_d(const char *fmt, t_state *state)
+void	print_i(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_i(const char *fmt, t_state *state)
+void	print_u(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_u(const char *fmt, t_state *state)
+void	print_x(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_x(const char *fmt, t_state *state)
+void	print_big_x(t_state *state)
 {
-	(void)fmt;
 	(void)state;
 }
 
-void	print_big_x(const char *fmt, t_state *state)
+void	print_percent(t_state *state)
 {
-	(void)fmt;
-	(void)state;
-}
-
-void	print_percent(const char *fmt, t_state *state)
-{
-	(void)fmt;
 	(void)state;
 }
 
@@ -79,37 +73,77 @@ void	init_func_table(t_state *state)
 	state->fn_ptr_table[8] = print_percent;
 }
 
-void	parse_conversion(const char *fmt, t_state *state)
+void	parse_conversion(const char **fmt, t_state *state)
 {
-	if (*fmt == 'c')
-		state->fn_ptr_table[0](fmt, state);
-	else if (*fmt == 's')
-		state->fn_ptr_table[1](fmt, state);
-	else if (*fmt == 'p')
-		state->fn_ptr_table[2](fmt, state);
-	else if (*fmt == 'd')
-		state->fn_ptr_table[3](fmt, state);
-	else if (*fmt == 'i')
-		state->fn_ptr_table[4](fmt, state);
-	else if (*fmt == 'u')
-		state->fn_ptr_table[5](fmt, state);
-	else if (*fmt == 'x')
-		state->fn_ptr_table[6](fmt, state);
-	else if (*fmt == 'X')
-		state->fn_ptr_table[7](fmt, state);
-	else if (*fmt == '%')
-		state->fn_ptr_table[8](fmt, state);
+	if (**fmt == 'c')
+		state->fn_ptr_table[0](state);
+	else if (**fmt == 's')
+		state->fn_ptr_table[1](state);
+	else if (**fmt == 'p')
+		state->fn_ptr_table[2](state);
+	else if (**fmt == 'd')
+		state->fn_ptr_table[3](state);
+	else if (**fmt == 'i')
+		state->fn_ptr_table[4](state);
+	else if (**fmt == 'u')
+		state->fn_ptr_table[5](state);
+	else if (**fmt == 'x')
+		state->fn_ptr_table[6](state);
+	else if (**fmt == 'X')
+		state->fn_ptr_table[7](state);
+	else if (**fmt == '%')
+		state->fn_ptr_table[8](state);
+	(*fmt)++;
 }
 
-void	parse_fmt(const char *fmt, t_state *state)
+void	parse_precision(const char **fmt, t_state *state)
 {
-	while (*fmt)
+	if (**fmt == '.')
 	{
-		if (*fmt == '%')
-			parse_conversion(fmt, state);
+		state->flags |= FLAG_DOT;
+		(*fmt)++;
+	}
+}
+
+void	parse_flags(const char **fmt, t_state *state)
+{
+	while(*fmt)
+	{
+		if (**fmt == '-')
+			state->flags |= FLAG_LEFT;
+		else if (**fmt == '0')
+			state->flags |= FLAG_ZERO;
+		else if (**fmt == '.')
+			state->flags |= FLAG_DOT;
+		else if (**fmt == '#')
+			state->flags |= FLAG_HASH;
+		else if (**fmt == ' ')
+			state->flags |= FLAG_SPACE;
+		else if (**fmt == '+')
+			state->flags |= FLAG_PLUS;
 		else
-			write(1, fmt, 1);
-		fmt++;
+			break;
+		(*fmt)++;
+	}
+	parse_precision(fmt, state);
+	parse_conversion(fmt, state);
+}
+
+void	parse_fmt(const char **fmt, t_state *state)
+{
+	while (**fmt)
+	{
+		if(**fmt != '%')
+		{
+			state->bytes += write(1, fmt, 1);
+			(*fmt)++;
+			continue;
+		}
+		else
+		{
+			(*fmt)++;
+			parse_flags(fmt, state);
+		}
 	}
 }
 
@@ -121,7 +155,7 @@ int	ft_printf(const char *fmt, ...)
 	state.flags = 0;
 	va_start(state.args, fmt);
 	init_func_table(&state);
-	parse_fmt(fmt, &state);
+	parse_fmt(&fmt, &state);
 	va_end(state.args);
 	return (state.bytes);
 }

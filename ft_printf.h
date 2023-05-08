@@ -6,7 +6,7 @@
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:14:10 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/06 21:32:54 by ebouvier         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:40:53 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_state
 	int		flags;
 	int		bytes;
 	va_list	args;
-	void	(*fn_ptr_table[9])(const char *, struct s_state *);
+	void	(*fn_ptr_table[9])(struct s_state *);
+	int		precision;
 }			t_state;
 
 #endif
