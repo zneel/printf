@@ -6,7 +6,7 @@
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:14:10 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/08 17:40:53 by ebouvier         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:48:24 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdint.h>
 
 int			ft_printf(const char *fmt, ...);
 
@@ -34,7 +34,9 @@ int			ft_printf(const char *fmt, ...);
 size_t		ft_strlen(const char *s);
 ssize_t		ft_putchar_fd(char c, int fd);
 size_t		ft_putnbr_base_fd(unsigned long long n, char *base, int fd);
+size_t		ft_utoa(char *buffer, unsigned long n, char *base);
 void		ft_putstr_fd(char *s, int fd);
+size_t		nbr_len_base(unsigned long long nbr, int base_len);
 
 typedef struct s_state
 {

@@ -5,7 +5,7 @@ AR = ar
 ARFLAGS = rcs
 
 SRCS = ft_printf.c ft_putchar_fd.c ft_putnbr_base_fd.c ft_putstr_fd.c \
-		ft_strlen.c
+		ft_strlen.c ft_utoa.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 

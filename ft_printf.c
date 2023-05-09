@@ -6,11 +6,12 @@
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:11:45 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/08 18:50:57 by ebouvier         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:48:43 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 void	print_c(t_state *state)
 {
@@ -33,15 +34,18 @@ void	print_s(t_state *state)
 void	print_p(t_state *state)
 {
 	void	*ptr;
+	char	buffer[8];
+	size_t	utoalen;
 
 	ptr = va_arg(state->args, void *);
 	if (!ptr)
 		state->bytes += write(1, "(nil)", 5);
 	else
 	{
+		utoalen = ft_utoa(buffer, (unsigned long)ptr, B16_LOWER);
+		printf("utoalen=%ld\n", utoalen);
 		state->bytes += write(1, "0x", 2);
-		state->bytes += ft_putnbr_base_fd((unsigned long long)ptr, B16_LOWER,
-				1);
+		state->bytes += write(1, buffer, 8);
 	}
 }
 

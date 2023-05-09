@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 15:10:30 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/09 17:20:30 by ebouvier         ###   ########.fr       */
+/*   Created: 2023/05/09 14:09:09 by ebouvier          #+#    #+#             */
+/*   Updated: 2023/05/09 14:23:36 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_putnbr_base_fd(unsigned long long n, char *base, int fd)
+size_t	nbr_len_base(unsigned long long nbr, int base_len)
 {
 	size_t	len;
-	size_t	bytes;
 
-	bytes = 0;
-	len = ft_strlen(base);
-	if (n < 0)
+	len = 0;
+	while (nbr)
 	{
-		bytes += ft_putchar_fd('-', fd);
-		n = -n;
+		len++;
+		nbr /= base_len;
 	}
-	if (n > len - 1)
-		bytes += ft_putnbr_base_fd(n / len, base, fd);
-	bytes += ft_putchar_fd(base[n % len], fd);
-	return (bytes);
+	return (len);
 }
