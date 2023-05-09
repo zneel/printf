@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-size_t	ft_putnbr_base_fd(ssize_t n, char *base, int fd)
+size_t	ft_putnbr_base_fd(unsigned long long n, char *base, int fd)
 {
-	int		len;
+	size_t	len;
 	size_t	bytes;
 
 	bytes = 0;
@@ -25,7 +24,7 @@ size_t	ft_putnbr_base_fd(ssize_t n, char *base, int fd)
 		bytes += ft_putchar_fd('-', fd);
 		n = -n;
 	}
-	if (n > len)
+	if (n > len - 1)
 		bytes += ft_putnbr_base_fd(n / len, base, fd);
 	bytes += ft_putchar_fd(base[n % len], fd);
 	return (bytes);

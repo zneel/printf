@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdint.h>
 
 int			ft_printf(const char *fmt, ...);
 
@@ -32,7 +33,7 @@ int			ft_printf(const char *fmt, ...);
 
 size_t		ft_strlen(const char *s);
 ssize_t		ft_putchar_fd(char c, int fd);
-size_t		ft_putnbr_base_fd(ssize_t n, char *base, int fd);
+size_t		ft_putnbr_base_fd(unsigned long long n, char *base, int fd);
 void		ft_putstr_fd(char *s, int fd);
 
 typedef struct s_state

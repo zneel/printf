@@ -24,10 +24,10 @@ int	main(void)
 	printf("printf_ret p=%d \n", printf("- %p - ", nullptr));
 	printf("ft_printf_ret p= %d\n", ft_printf("- %p - ", nullptr));
 
-    printf("printf_ret p=%d \n", printf("- %p - ", 16));
-	printf("ft_printf_ret p= %d\n", ft_printf("- %p - ", 16));
+    printf("printf_ret p=%d \n", printf("- %p - ", (void*)16));
+	printf("ft_printf_ret p= %d\n", ft_printf("- %p - ", (void*)16));
 
-        printf("printf_ret p=%d \n", printf("- %p - ", LONG_MIN));
-	printf("ft_printf_ret p= %d\n", ft_printf("- %p - ", LONG_MIN));
+	printf("printf_ret p=%d \n", printf("- %p - ", (void*)LONG_MIN));
+	printf("ft_printf_ret p= %d\n", ft_printf("- %p - ", (void*)LONG_MIN));
 	return (0);
 }

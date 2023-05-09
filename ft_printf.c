@@ -32,7 +32,7 @@ void	print_s(t_state *state)
 
 void	print_p(t_state *state)
 {
-	void* ptr;
+	void	*ptr;
 
 	ptr = va_arg(state->args, void *);
 	if (!ptr)
@@ -40,9 +40,10 @@ void	print_p(t_state *state)
 	else
 	{
 		state->bytes += write(1, "0x", 2);
-		state->bytes += ft_putnbr_base_fd((unsigned long)ptr, B16_LOWER, 1);
+		state->bytes += ft_putnbr_base_fd((unsigned long long)ptr, B16_LOWER,
+				1);
 	}
-}	
+}
 
 void	print_d(t_state *state)
 {
