@@ -153,7 +153,8 @@ void	parse_precision(const char **fmt, t_state *state)
 {
 	if (**fmt == '.')
 	{
-		state->flags |= FLAG_DOT;
+		state->flags |= F_DOT;
+		state->precision = ft_atoi(*fmt);
 		(*fmt)++;
 	}
 }
@@ -163,17 +164,17 @@ void	parse_flags(const char **fmt, t_state *state)
 	while (*fmt)
 	{
 		if (**fmt == '-')
-			state->flags |= FLAG_LEFT;
+			state->flags |= F_LEFT;
 		else if (**fmt == '0')
-			state->flags |= FLAG_ZERO;
+			state->flags |= F_ZERO;
 		else if (**fmt == '.')
-			state->flags |= FLAG_DOT;
+			state->flags |= F_DOT;
 		else if (**fmt == '#')
-			state->flags |= FLAG_HASH;
+			state->flags |= F_HASH;
 		else if (**fmt == ' ')
-			state->flags |= FLAG_SPACE;
+			state->flags |= F_SPACE;
 		else if (**fmt == '+')
-			state->flags |= FLAG_PLUS;
+			state->flags |= F_PLUS;
 		else
 			break ;
 		(*fmt)++;
