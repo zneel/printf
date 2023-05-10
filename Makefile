@@ -1,11 +1,11 @@
 NAME = libftprintf.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 AR = ar
 ARFLAGS = rcs
 
-SRCS = ft_printf.c ft_putchar_fd.c ft_putnbr_base_fd.c ft_putstr_fd.c \
-		ft_strlen.c ft_utoa.c utils.c
+SRCS = ft_printf.c ft_putchar_fd.c ft_putstr_fd.c \
+		ft_strlen.c out.c numbers.c utils.c
 
 OBJS = $(SRCS:.c=.o)
 

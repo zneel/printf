@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base_fd.c                                :+:      :+:    :+:   */
+/*   out.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 15:10:30 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/09 17:20:30 by ebouvier         ###   ########.fr       */
+/*   Created: 2023/05/10 10:28:32 by ebouvier          #+#    #+#             */
+/*   Updated: 2023/05/10 18:09:45 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_putnbr_base_fd(unsigned long long n, char *base, int fd)
+size_t	format(t_state *state, char *buffer, size_t len)
 {
-	size_t	len;
-	size_t	bytes;
+    (void)state;
+    (void)buffer;
+    (void)len;
+	return (0);
+}
 
-	bytes = 0;
-	len = ft_strlen(base);
-	if (n < 0)
-	{
-		bytes += ft_putchar_fd('-', fd);
-		n = -n;
-	}
-	if (n > len - 1)
-		bytes += ft_putnbr_base_fd(n / len, base, fd);
-	bytes += ft_putchar_fd(base[n % len], fd);
-	return (bytes);
+size_t	out(char *buffer, size_t len)
+{
+	size_t  written;
+
+	written = 0;
+	written += write(1, buffer, len);
+	return (written);
 }

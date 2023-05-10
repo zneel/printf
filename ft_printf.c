@@ -6,7 +6,7 @@
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 21:11:45 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/09 17:48:43 by ebouvier         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:30:19 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_s(t_state *state)
 void	print_p(t_state *state)
 {
 	void	*ptr;
-	char	buffer[8];
+	char	buffer[64];
 	size_t	utoalen;
 
 	ptr = va_arg(state->args, void *);
@@ -42,51 +42,70 @@ void	print_p(t_state *state)
 		state->bytes += write(1, "(nil)", 5);
 	else
 	{
-		utoalen = ft_utoa(buffer, (unsigned long)ptr, B16_LOWER);
-		printf("utoalen=%ld\n", utoalen);
+		utoalen = ultoa_base(buffer, (unsigned long)ptr, B16_LOWER);
 		state->bytes += write(1, "0x", 2);
-		state->bytes += write(1, buffer, 8);
+		format(state, buffer, utoalen);
+		state->bytes += out(buffer, utoalen);
 	}
 }
 
 void	print_d(t_state *state)
 {
-	int	d;
+	int		d;
+	char	buffer[64];
+	size_t	itoalen;
 
 	d = va_arg(state->args, int);
-	state->bytes += ft_putnbr_base_fd(d, B10, 1);
+	itoalen = ltoa_base(buffer, d, B10);
+	format(state, buffer, itoalen);
+	state->bytes += out(buffer, itoalen);
 }
 
 void	print_i(t_state *state)
 {
-	int	i;
+	int		i;
+	char	buffer[64];
+	size_t	itoalen;
 
 	i = va_arg(state->args, int);
-	state->bytes += ft_putnbr_base_fd(i, B10, 1);
+	itoalen = ltoa_base(buffer, i, B10);
+	state->bytes += out(buffer, itoalen);
 }
 
 void	print_u(t_state *state)
 {
 	unsigned int	u;
+	char			buffer[64];
+	size_t			uitoalen;
 
-	u = va_arg(state->args, int);
-	state->bytes += ft_putnbr_base_fd((size_t)u, B10, 1);
+	u = va_arg(state->args, unsigned int);
+	uitoalen = uitoa_base(buffer, u, B10);
+	format(state, buffer, uitoalen);
+	state->bytes += out(buffer, uitoalen);
 }
 
 void	print_x(t_state *state)
 {
-	int	x;
+	unsigned int	x;
+	char	buffer[64];
+	size_t	itoalen;
 
-	x = va_arg(state->args, int);
-	state->bytes += ft_putnbr_base_fd(x, B16_LOWER, 1);
+	x = va_arg(state->args, unsigned int);
+	itoalen = ultoa_base(buffer, x, B16_LOWER);
+	format(state, buffer, itoalen);
+	state->bytes += out(buffer, itoalen);
 }
 
 void	print_big_x(t_state *state)
 {
-	int	big_x;
+	unsigned int		big_x;
+	char	buffer[64];
+	size_t	itoalen;
 
-	big_x = va_arg(state->args, int);
-	state->bytes += ft_putnbr_base_fd(big_x, B16_UPPER, 1);
+	big_x = va_arg(state->args, unsigned int);
+	itoalen = ultoa_base(buffer, big_x, B16_UPPER);
+	format(state, buffer, itoalen);
+	state->bytes += out(buffer, itoalen);
 }
 
 void	print_percent(t_state *state)
