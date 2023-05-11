@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   numbers.c                                          :+:      :+:    :+:   */
+/*   ntoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebouvier <ebouvier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 15:10:30 by ebouvier          #+#    #+#             */
-/*   Updated: 2023/05/10 18:17:13 by ebouvier         ###   ########.fr       */
+/*   Created: 2023/05/11 18:21:18 by ebouvier          #+#    #+#             */
+/*   Updated: 2023/05/11 18:30:52 by ebouvier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 /**
- * @brief Transform the unsigned long n to a string in the buffer
+ * @brief Transform the long n to a string in the buffer
  * 
  * @param buffer 
  * @param n 
@@ -73,7 +72,7 @@ size_t	ultoa_base(char *buffer, unsigned long n, char *base, int extra)
 }
 
 /**
- * @brief Transform the unsigned long n to a string in the buffer
+ * @brief Transform the unsigned int n to a string in the buffer
  * 
  * @param buffer 
  * @param n 
@@ -91,7 +90,7 @@ size_t	uitoa_base(char *buffer, unsigned int n, char *base)
 	copied = len;
 	while (len)
 	{
-		buffer[--len]= base[n % base_len];
+		buffer[--len] = base[n % base_len];
 		n /= base_len;
 	}
 	return (copied);
