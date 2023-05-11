@@ -145,54 +145,6 @@ void	parse_conversion(const char **fmt, t_state *state)
 	(*fmt)++;
 }
 
-void	parse_precision(const char **fmt, t_state *state)
-{
-	if (**fmt == '.')
-	{
-		(*fmt)++;
-		state->flags |= F_DOT;
-		if (ft_isdigit(**fmt))
-			state->precision = ft_atoi(*fmt);
-		while (ft_isdigit(**fmt))
-			(*fmt)++;
-	}
-}
-
-void	parse_width(const char **fmt, t_state *state)
-{
-	if (ft_isdigit(**fmt))
-	{
-		state->width = ft_atoi(*fmt);
-		while (ft_isdigit(**fmt))
-			(*fmt)++;
-	}
-}
-
-void	parse_flags(const char **fmt, t_state *state)
-{
-	while (*fmt)
-	{
-		if (**fmt == '-')
-			state->flags |= F_LEFT;
-		else if (**fmt == '0')
-			state->flags |= F_ZERO;
-		else if (**fmt == '.')
-			state->flags |= F_DOT;
-		else if (**fmt == '#')
-			state->flags |= F_HASH;
-		else if (**fmt == ' ')
-			state->flags |= F_SPACE;
-		else if (**fmt == '+')
-			state->flags |= F_PLUS;
-		else
-			break ;
-		(*fmt)++;
-	}
-	parse_width(fmt, state);
-	parse_precision(fmt, state);
-	parse_conversion(fmt, state);
-}
-
 void	parse_fmt(const char **fmt, t_state *state)
 {
 	while (**fmt)
@@ -206,7 +158,7 @@ void	parse_fmt(const char **fmt, t_state *state)
 		else
 		{
 			(*fmt)++;
-			parse_flags(fmt, state);
+			parse_conversion(fmt, state);
 		}
 	}
 }
@@ -215,8 +167,6 @@ void	init_state(t_state *state)
 {
 	state->bytes = 0;
 	state->flags = 0;
-	state->precision = 0;
-	state->width = 0;
 }
 
 int	ft_printf(const char *fmt, ...)

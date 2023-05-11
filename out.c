@@ -14,17 +14,10 @@
 
 size_t	out(t_state *state, char *buffer, size_t len)
 {
-	int	width;
 	size_t written;
 
-	width = len;
 	written = 0;
-	if (!(state->flags & F_LEFT))
-		while (width++ < state->width)
-			written += write(1, " ", 1);
 	written += write(1, buffer, len);
-	if (state->flags & F_LEFT)
-		while (width++ < state->width)
-			written += write(1, " ", 1);
+	write(1, "\0", 1);
 	return (written);
 }
