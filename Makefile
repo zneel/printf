@@ -3,14 +3,12 @@ CC = cc
 CFLAGS = 
 AR = ar
 ARFLAGS = rcs
-LIBFT = ./libft/libft.a
-LIBFT_DIR = ./libft
 
-SRCS = ft_printf.c out.c numbers.c utils.c
+SRCS = ft_printf.c out.c numbers.c utils.c ft_strlen.c
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
@@ -18,11 +16,8 @@ $(NAME): $(OBJS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
-test: $(NAME) $(LIBFT) main.c
-	$(CC) $(CFLAGS) main.c $(NAME) $(LIBFT) -o test
+test: $(NAME) main.c
+	$(CC) $(CFLAGS) main.c $(NAME) -o test
 	./test
 
 clean:

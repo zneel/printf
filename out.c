@@ -12,12 +12,7 @@
 
 #include "ft_printf.h"
 
-size_t	out(t_state *state, char *buffer, size_t len)
+size_t	out(char *buffer, size_t len)
 {
-	size_t written;
-
-	written = 0;
-	written += write(1, buffer, len);
-	write(1, "\0", 1);
-	return (written);
+	return (write(1, buffer, len));
 }

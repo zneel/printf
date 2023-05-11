@@ -39,7 +39,7 @@ void	print_p(t_state *state)
 
 	ptr = va_arg(state->args, void *);
 	if (!ptr)
-		state->bytes += write(1, "(nil)", 5);
+		state->bytes += out(state, "(nil)", 5);
 	else
 	{
 		utoalen = ultoa_base(buffer, (unsigned long)ptr, B16_LOWER, 2);
