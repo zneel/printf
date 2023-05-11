@@ -2,56 +2,62 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define BLUE "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN "\033[36m"
-#define WHITE "\033[37m"
+#define RESET "\x1B[0m"
+#define RED "\x1B[31m"
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define BLUE "\x1B[34m"
+#define MAGENTA "\x1B[35m"
+#define CYAN "\x1B[36m"
+#define WHITE "\x1B[37m"
 
-int	main(void)
+int main(void)
 {
-	char	*s;
-	void	*ptr;
-	void	*nullptr;
+	char *s;
+	void *ptr;
+	void *nullptr;
 
 	s = NULL;
 	ptr = &s;
 	nullptr = NULL;
+
+	// dumb check
+	printf("Idiot check NULL\n");
+	printf("printf_ret p=%d\n", printf(NULL));
+	printf("ft_printf_ret p=%d\n", ft_printf(NULL));
+
 	// c
 	printf("PRINTING percent c\n");
-	printf(" printf_ret p=%d\n", printf("%c ", 0));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%c ", 0));
-	printf(" printf_ret p=%d\n", printf("%c ", 'b'));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%c ", 'b'));
+	printf("printf_ret p=%d\n", printf("%c ", 0));
+	printf("ft_printf_ret p=%d\n", ft_printf("%c ", 0));
+	printf("printf_ret p=%d\n", printf("%c ", 'b'));
+	printf("ft_printf_ret p=%d\n", ft_printf("%c ", 'b'));
 	printf("============================================================================\n");
 	// s
 	printf("PRINTING percent s\n");
-	printf(" printf_ret p=%d\n", printf("%s ", "string1"));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%s ", "string1"));
-	printf(" printf_ret p=%d\n", printf("%s ", nullptr));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%s ", nullptr));
-	printf(" printf_ret p=%d\n", printf("%s ", "😀😀😀😀"));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%s ", "😀😀😀😀"));
+	printf("printf_ret p=%d\n", printf("%s ", "string1"));
+	printf("ft_printf_ret p=%d\n", ft_printf("%s ", "string1"));
+	printf("printf_ret p=%d\n", printf("%s ", nullptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%s ", nullptr));
+	printf("printf_ret p=%d\n", printf("%s ", "😀😀😀😀"));
+	printf("ft_printf_ret p=%d\n", ft_printf("%s ", "😀😀😀😀"));
 	printf("printf_ret p=%d\n", printf("%s ",
-				"QWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKE"));
-	printf("ft_printf_ret p= %d\n", ft_printf("%s ",
-				"QWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKE"));
+									   "QWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKE"));
+	printf("ft_printf_ret p=%d\n", ft_printf("%s ",
+											  "QWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKEQWLEKLQWJJELQWKE"));
 	printf("============================================================================\n");
 	// p
 	printf("PRINTING percent p\n");
-	printf(" printf_ret p=%d\n", printf("%p ", ptr));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%p ", ptr));
-	printf(" printf_ret p=%d\n", printf("%p ", nullptr));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%p ", nullptr));
-	printf(" printf_ret p=%d\n", printf("%p ", (void *)16));
-	printf(" ft_printf_ret p= %d\n", ft_printf("%p ", (void *)16));
+	printf("printf_ret p=%d\n", printf("%p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%p ", ptr));
+	printf("printf_ret p=%d\n", printf("%p ", nullptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%p ", nullptr));
+	printf("printf_ret p=%d\n", printf("%p ", (void *)16));
+	printf("ft_printf_ret p=%d\n", ft_printf("%p ", (void *)16));
 	printf("printf_ret p=%d\n", printf("%p ", (void *)LONG_MIN));
-	printf("ft_printf_ret p= %d\n", ft_printf("%p ", (void *)LONG_MIN));
+	printf("ft_printf_ret p=%d\n", ft_printf("%p ", (void *)LONG_MIN));
 	printf("============================================================================\n");
-	//d
+	// d
 	printf("PRINTING percent d\n");
 	printf("printf_ret p=%d\n", printf("%d ", 42));
 	printf("ft_printf_ret p=%d\n", ft_printf("%d ", 42));
@@ -74,7 +80,7 @@ int	main(void)
 	printf("printf_ret p=%d\n", printf("%d ", ULONG_MAX));
 	printf("ft_printf_ret p=%d\n", ft_printf("%d ", ULONG_MAX));
 	printf("============================================================================\n");
-	//i
+	// i
 	printf("PRINTING percent i\n");
 	printf("printf_ret p=%d\n", printf("%i ", 42));
 	printf("ft_printf_ret p=%d\n", ft_printf("%i ", 42));
@@ -97,7 +103,7 @@ int	main(void)
 	printf("printf_ret p=%d\n", printf("%i ", ULONG_MAX));
 	printf("ft_printf_ret p=%d\n", ft_printf("%i ", ULONG_MAX));
 	printf("============================================================================\n");
-	//x
+	// x
 	printf("PRINTING percent x\n");
 	printf("printf_ret p=%d\n", printf("%x ", 42));
 	printf("ft_printf_ret p=%d\n", ft_printf("%x ", 42));
@@ -120,7 +126,7 @@ int	main(void)
 	printf("printf_ret p=%d\n", printf("%x ", ULONG_MAX));
 	printf("ft_printf_ret p=%d\n", ft_printf("%x ", ULONG_MAX));
 	printf("============================================================================\n");
-	//X
+	// X
 	printf("PRINTING percent X\n");
 	printf("printf_ret p=%d\n", printf("%X ", 42));
 	printf("ft_printf_ret p=%d\n", ft_printf("%X ", 42));
@@ -143,46 +149,163 @@ int	main(void)
 	printf("printf_ret p=%d\n", printf("%X ", ULONG_MAX));
 	printf("ft_printf_ret p=%d\n", ft_printf("%X ", ULONG_MAX));
 	printf("============================================================================\n");
-	printf(GREEN "PRINTING Flags and Precision\n" RESET);
-    // Left justify (-) and width with negative precision
-    printf(RED "Left justify (-) and width with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%-10.*d ", -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("%-10.*d ", -5, 42));
 
-    // Plus sign (+) with negative precision
-    printf(YELLOW "Plus sign (+) with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%+.*d ", -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("%+.*d ", -5, 42));
+	printf("PRINTING simple flags for C\n");
+	// pre padding
+	printf("printf_ret p=%d\n", printf("%10c ", 'a'));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10c ", 'a'));
+	// post padding
+	printf("printf_ret p=%d\n", printf("%-10c ", 'a'));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10c ", 'a'));
 
-    // Space (' ') with negative precision
-    printf(BLUE "Space (' ') with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("% .*d ", -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("% .*d ", -5, 42));
+	printf("PRINTING simple flags for S\n");
+	// pre padding
+	printf("printf_ret p=%d\n", printf("%10s ", "Hello"));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10s ", "Hello"));
+	// post padding
+	printf("printf_ret p=%d\n", printf("%-10s ", "Hello"));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10s ", "Hello"));
 
-    // Alternate form (#) with negative precision
-    printf(MAGENTA "Alternate form (#) with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%#.*x ", -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("%#.*x ", -5, 42));
+	printf("PRINTING simple flags for p\n");
+	// pre-padding
+	printf("printf_ret p=%d\n", printf("%20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%20p ", ptr));
+	// post-padding
+	printf("printf_ret p=%d\n", printf("%-20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-20p ", ptr));
 
-    // Zero-padding (0), width, and negative precision
-    printf(CYAN "Zero-padding (0), width, and negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%0*.*d ", 10, -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("%0*.*d ", 10, -5, 42));
+	printf("PRINTING simple flags for d\n");
+	// pre-padding
+	printf("printf_ret p=%d\n", printf("%10d ", 42));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10d ", 42));
+	// post-padding
+	printf("printf_ret p=%d\n", printf("%-10d ", 42));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10d ", 42));
 
-    // Precision (.) for integers with negative precision
-    printf(WHITE "Precision (.) for integers with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%.*d ", -5, 42));
-    printf("ft_printf_ret p=%d\n", ft_printf("%.*d ", -5, 42));
+	printf("PRINTING simple flags for i\n");
+	// pre-padding
+	printf("printf_ret p=%d\n", printf("%10i ", -42));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10i ", -42));
+	// post-padding
+	printf("printf_ret p=%d\n", printf("%-10i ", -42));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10i ", -42));
 
-    // Precision (.) for strings with negative precision
-    printf(RED "Precision (.) for strings with negative precision:\n" RESET);
-    printf("printf_ret p=%d\n", printf("%.*s ", -5, "Hello, world!"));
-    printf("ft_printf_ret p=%d\n", ft_printf("%.*s ", -5, "Hello, world!"));
+	printf("PRINTING simple flags for x\n");
+	// pre-padding
+	printf("printf_ret p=%d\n", printf("%10x ", 255));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10x ", 255));
+	// post-padding
+	printf("printf_ret p=%d\n", printf("%-10x ", 255));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10x ", 255));
 
-	// Combination of flags, width, and negative precision
-	printf(YELLOW "Combination of flags, width, and negative precision:\n" RESET);
-	printf("printf_ret p=%d\n", printf("%+0*.*d ", 10, -5, 42));
-	printf("ft_printf_ret p=%d\n", ft_printf("%+0*.*d ", 10, -5, 42));
+	printf("PRINTING simple flags for X\n");
+	// pre-padding
+	printf("printf_ret p=%d\n", printf("%10X ", 255));
+	printf("ft_printf_ret p=%d\n", ft_printf("%10X ", 255));
+	// post-padding
+	printf("printf_ret p=%d\n", printf("%-10X ", 255));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-10X ", 255));
+
 	printf("============================================================================\n");
+	printf(GREEN "ADVANCED: PRINTING Flags and Precision\n" RESET);
+
+	// Conversions: %c, %s, %p, %d, %i, %u, %x, %X, %%
+	char ch = 'A';
+	char *str = "Vegeta the best";
+	int dec = 42;
+	unsigned int udec = 42;
+	int hex = 255;
+
+	printf(RED "Combinaison of flags with conversions:\n" RESET);
+
+	// %c
+	printf("printf_ret c=%d\n", printf("%-10c ", ch));
+	printf("ft_printf_ret c=%d\n", ft_printf("%-10c ", ch));
+	printf("printf_ret c=%d\n", printf("%010c ", ch));
+	printf("ft_printf_ret c=%d\n", ft_printf("%010c ", ch));
+	printf("printf_ret c=%d\n", printf("%#-10c ", ch));
+	printf("ft_printf_ret c=%d\n", ft_printf("%#-10c ", ch));
+	printf("printf_ret c=%d\n", printf("%+10c ", ch));
+	printf("ft_printf_ret c=%d\n", ft_printf("%+10c ", ch));
+	printf("printf_ret c=%d\n", printf("% -10c ", ch));
+	printf("ft_printf_ret c=%d\n", ft_printf("% -10c ", ch));
+
+	// %s
+	printf("printf_ret s=%d\n", printf("%-20s ", str));
+	printf("ft_printf_ret s=%d\n", ft_printf("%-20s ", str));
+	printf("printf_ret s=%d\n", printf("%020s ", str));
+	printf("ft_printf_ret s=%d\n", ft_printf("%020s ", str));
+	printf("printf_ret s=%d\n", printf("%#-20s ", str));
+	printf("ft_printf_ret s=%d\n", ft_printf("%#-20s ", str));
+	printf("printf_ret s=%d\n", printf("%+20s ", str));
+	printf("ft_printf_ret s=%d\n", ft_printf("%+20s ", str));
+	printf("printf_ret s=%d\n", printf("% -20s ", str));
+	printf("ft_printf_ret s=%d\n", ft_printf("% -20s ", str));
+
+	// %p
+	printf("printf_ret p=%d\n", printf("%-20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%-20p ", ptr));
+	printf("printf_ret p=%d\n", printf("%020p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%020p ", ptr));
+	printf("printf_ret p=%d\n", printf("%#-20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%#-20p ", ptr));
+	printf("printf_ret p=%d\n", printf("%+20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("%+20p ", ptr));
+	printf("printf_ret p=%d\n", printf("% -20p ", ptr));
+	printf("ft_printf_ret p=%d\n", ft_printf("% -20p ", ptr));
+
+	// %d, %i
+	printf("printf_ret di=%d\n", printf("%-10d ", dec));
+	printf("ft_printf_ret di=%d\n", ft_printf("%-10d ", dec));
+	printf("printf_ret di=%d\n", printf("%010d ", dec));
+	printf("ft_printf_ret di=%d\n", ft_printf("%010d ", dec));
+	printf("printf_ret di=%d\n", printf("%#-10d ", dec));
+	printf("ft_printf_ret di=%d\n", ft_printf("%#-10d ", dec));
+	printf("printf_ret di=%d\n", printf("%+10d ", dec));
+	printf("ft_printf_ret di=%d\n", ft_printf("%+10d ", dec));
+	printf("printf_ret di=%d\n", printf("% -10d ", dec));
+	printf("ft_printf_ret di=%d\n", ft_printf("% -10d ", dec));
+
+	// %u
+	printf("printf_ret u=%d\n", printf("%-10u ", udec));
+	printf("ft_printf_ret u=%d\n", ft_printf("%-10u ", udec));
+	printf("printf_ret u=%d\n", printf("%010u ", udec));
+	printf("ft_printf_ret u=%d\n", ft_printf("%010u ", udec));
+	printf("printf_ret u=%d\n", printf("%#-10u ", udec));
+	printf("ft_printf_ret u=%d\n", ft_printf("%#-10u ", udec));
+	printf("printf_ret u=%d\n", printf("%+10u ", udec));
+	printf("ft_printf_ret u=%d\n", ft_printf("%+10u ", udec));
+	printf("printf_ret u=%d\n", printf("% -10u ", udec));
+	printf("ft_printf_ret u=%d\n", ft_printf("% -10u ", udec));
+
+	// %x
+	printf("printf_ret x=%d\n", printf("%-10x ", hex));
+	printf("ft_printf_ret x=%d\n", ft_printf("%-10x ", hex));
+	printf("printf_ret x=%d\n", printf("%010x ", hex));
+	printf("ft_printf_ret x=%d\n", ft_printf("%010x ", hex));
+	printf("printf_ret x=%d\n", printf("%#-10x ", hex));
+	printf("ft_printf_ret x=%d\n", ft_printf("%#-10x ", hex));
+	printf("printf_ret x=%d\n", printf("%+10x ", hex));
+	printf("ft_printf_ret x=%d\n", ft_printf("%+10x ", hex));
+	printf("printf_ret x=%d\n", printf("% -10x ", hex));
+	printf("ft_printf_ret x=%d\n", ft_printf("% -10x ", hex));
+
+	// %X
+	printf("printf_ret X=%d\n", printf("%-10X ", hex));
+	printf("ft_printf_ret X=%d\n", ft_printf("%-10X ", hex));
+	printf("printf_ret X=%d\n", printf("%010X ", hex));
+	printf("ft_printf_ret X=%d\n", ft_printf("%010X ", hex));
+	printf("printf_ret X=%d\n", printf("%#-10X ", hex));
+	printf("ft_printf_ret X=%d\n", ft_printf("%#-10X ", hex));
+	printf("printf_ret X=%d\n", printf("%+10X ", hex));
+	printf("ft_printf_ret X=%d\n", ft_printf("%+10X ", hex));
+	printf("printf_ret X=%d\n", printf("% -10X ", hex));
+	printf("ft_printf_ret X=%d\n", ft_printf("% -10X ", hex));
+
+	// %%
+	printf("printf_ret %%=%d\n", printf("%% "));
+	printf("ft_printf_ret %%=%d\n", ft_printf("%% "));
+	printf("============================================================================\n");
+
 	return (0);
 }

@@ -55,14 +55,14 @@ size_t	ltoa_base(char *buffer, long n, char *base)
  * @param base 
  * @return size_t 
  */
-size_t	ultoa_base(char *buffer, unsigned long n, char *base)
+size_t	ultoa_base(char *buffer, unsigned long n, char *base, int extra)
 {
 	size_t	len;
 	size_t	copied;
 	size_t	base_len;
 
 	base_len = ft_strlen(base);
-	len = ul_nbr_len_base(n, base_len);
+	len = ul_nbr_len_base(n, base_len) + extra;
 	copied = len;
 	while (len)
 	{

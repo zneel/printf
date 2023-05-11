@@ -21,12 +21,12 @@
 
 int			ft_printf(const char *fmt, ...);
 
-# define F_HASH 0x1
-# define F_ZERO 0x2
-# define F_LEFT 0x4
-# define F_PLUS 0x8
-# define F_SPACE 0x10
-# define F_DOT 0x20
+# define F_HASH 0x1 // #
+# define F_ZERO 0x2 // 0
+# define F_LEFT 0x4 // -
+# define F_PLUS 0x8 // +
+# define F_SPACE 0x10 // ' '
+# define F_DOT 0x20 // .
 
 # define B16_UPPER "0123456789ABCDEF"
 # define B16_LOWER "0123456789abcdef"
@@ -43,10 +43,9 @@ typedef struct s_state
 }			t_state;
 
 size_t		ltoa_base(char *buffer, long n, char *base);
-size_t		ultoa_base(char *buffer, unsigned long n, char *base);
+size_t		ultoa_base(char *buffer, unsigned long n, char *base, int extra);
 size_t		uitoa_base(char *buffer, unsigned int n, char *base);
-size_t		format(t_state *state, char *buffer, size_t len);
-size_t		out(char *buffer, size_t len);
+size_t		out(t_state *state, char *buffer, size_t len);
 size_t		ul_nbr_len_base(unsigned long long nbr, int base_len);
 size_t		l_nbr_len_base(long nbr, int base_len);
 

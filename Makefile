@@ -21,7 +21,7 @@ $(NAME): $(OBJS)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-test: $(NAME) $(LIBFT)
+test: $(NAME) $(LIBFT) main.c
 	$(CC) $(CFLAGS) main.c $(NAME) $(LIBFT) -o test
 	./test
 

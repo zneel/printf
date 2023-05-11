@@ -18,7 +18,7 @@ void	print_c(t_state *state)
 	char	c;
 
 	c = va_arg(state->args, int);
-	state->bytes += write(1, &c, 1);
+	state->bytes += out(state, &c, 1);
 }
 
 void	print_s(t_state *state)
@@ -28,7 +28,7 @@ void	print_s(t_state *state)
 	s = va_arg(state->args, char *);
 	if (!s)
 		s = "(null)";
-	state->bytes += write(1, s, ft_strlen(s));
+	state->bytes += out(state, s, ft_strlen(s));
 }
 
 void	print_p(t_state *state)
@@ -42,10 +42,10 @@ void	print_p(t_state *state)
 		state->bytes += write(1, "(nil)", 5);
 	else
 	{
-		utoalen = ultoa_base(buffer, (unsigned long)ptr, B16_LOWER);
-		state->bytes += write(1, "0x", 2);
-		format(state, buffer, utoalen);
-		state->bytes += out(buffer, utoalen);
+		utoalen = ultoa_base(buffer, (unsigned long)ptr, B16_LOWER, 2);
+		buffer[0] = '0';
+		buffer[1] = 'x';
+		state->bytes += out(state, buffer, utoalen);
 	}
 }
 
@@ -57,8 +57,7 @@ void	print_d(t_state *state)
 
 	d = va_arg(state->args, int);
 	itoalen = ltoa_base(buffer, d, B10);
-	format(state, buffer, itoalen);
-	state->bytes += out(buffer, itoalen);
+	state->bytes += out(state, buffer, itoalen);
 }
 
 void	print_i(t_state *state)
@@ -69,7 +68,7 @@ void	print_i(t_state *state)
 
 	i = va_arg(state->args, int);
 	itoalen = ltoa_base(buffer, i, B10);
-	state->bytes += out(buffer, itoalen);
+	state->bytes += out(state, buffer, itoalen);
 }
 
 void	print_u(t_state *state)
@@ -80,32 +79,29 @@ void	print_u(t_state *state)
 
 	u = va_arg(state->args, unsigned int);
 	uitoalen = uitoa_base(buffer, u, B10);
-	format(state, buffer, uitoalen);
-	state->bytes += out(buffer, uitoalen);
+	state->bytes += out(state, buffer, uitoalen);
 }
 
 void	print_x(t_state *state)
 {
 	unsigned int	x;
-	char	buffer[64];
-	size_t	itoalen;
+	char			buffer[64];
+	size_t			itoalen;
 
 	x = va_arg(state->args, unsigned int);
-	itoalen = ultoa_base(buffer, x, B16_LOWER);
-	format(state, buffer, itoalen);
-	state->bytes += out(buffer, itoalen);
+	itoalen = ultoa_base(buffer, x, B16_LOWER, 0);
+	state->bytes += out(state, buffer, itoalen);
 }
 
 void	print_big_x(t_state *state)
 {
-	unsigned int		big_x;
-	char	buffer[64];
-	size_t	itoalen;
+	unsigned int	big_x;
+	char			buffer[64];
+	size_t			itoalen;
 
 	big_x = va_arg(state->args, unsigned int);
-	itoalen = ultoa_base(buffer, big_x, B16_UPPER);
-	format(state, buffer, itoalen);
-	state->bytes += out(buffer, itoalen);
+	itoalen = ultoa_base(buffer, big_x, B16_UPPER, 0);
+	state->bytes += out(state, buffer, itoalen);
 }
 
 void	print_percent(t_state *state)
@@ -153,9 +149,22 @@ void	parse_precision(const char **fmt, t_state *state)
 {
 	if (**fmt == '.')
 	{
-		state->flags |= F_DOT;
-		state->precision = ft_atoi(*fmt);
 		(*fmt)++;
+		state->flags |= F_DOT;
+		if (ft_isdigit(**fmt))
+			state->precision = ft_atoi(*fmt);
+		while (ft_isdigit(**fmt))
+			(*fmt)++;
+	}
+}
+
+void	parse_width(const char **fmt, t_state *state)
+{
+	if (ft_isdigit(**fmt))
+	{
+		state->width = ft_atoi(*fmt);
+		while (ft_isdigit(**fmt))
+			(*fmt)++;
 	}
 }
 
@@ -179,6 +188,7 @@ void	parse_flags(const char **fmt, t_state *state)
 			break ;
 		(*fmt)++;
 	}
+	parse_width(fmt, state);
 	parse_precision(fmt, state);
 	parse_conversion(fmt, state);
 }
@@ -201,12 +211,21 @@ void	parse_fmt(const char **fmt, t_state *state)
 	}
 }
 
+void	init_state(t_state *state)
+{
+	state->bytes = 0;
+	state->flags = 0;
+	state->precision = 0;
+	state->width = 0;
+}
+
 int	ft_printf(const char *fmt, ...)
 {
 	t_state	state;
 
-	state.bytes = 0;
-	state.flags = 0;
+	if (!fmt)
+		return (-1);
+	init_state(&state);
 	va_start(state.args, fmt);
 	init_func_table(&state);
 	parse_fmt(&fmt, &state);

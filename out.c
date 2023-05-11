@@ -12,19 +12,19 @@
 
 #include "ft_printf.h"
 
-size_t	format(t_state *state, char *buffer, size_t len)
+size_t	out(t_state *state, char *buffer, size_t len)
 {
-    (void)state;
-    (void)buffer;
-    (void)len;
-	return (0);
-}
+	int	width;
+	size_t written;
 
-size_t	out(char *buffer, size_t len)
-{
-	size_t  written;
-
+	width = len;
 	written = 0;
+	if (!(state->flags & F_LEFT))
+		while (width++ < state->width)
+			written += write(1, " ", 1);
 	written += write(1, buffer, len);
+	if (state->flags & F_LEFT)
+		while (width++ < state->width)
+			written += write(1, " ", 1);
 	return (written);
 }
